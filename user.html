@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>FreshCart - User</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="nav">
+
+<div class="logo">
+Fresh<span>Cart</span> 🛒
+</div>
+
+<button onclick="location.href='index.html'">
+Home
+</button>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+<div class="admin-box">
+
+<h2>👤 User Account</h2>
+
+<div id="userDetails"></div>
+
+<h2 style="margin-top:25px">
+📦 My Orders
+</h2>
+
+<div id="userOrders"></div>
+
+</div>
+
+</main>
+
+
+<script src="js/user.js"></script>
+<script src="js/auth.js"></script>
+
+<script>
+
+if(currentUser){
+
+document.getElementById("userDetails").innerHTML=`
+
+<p>
+<b>Name:</b> ${currentUser.name}
+</p>
+
+<p>
+<b>Email:</b> ${currentUser.email}
+</p>
+
+<p>
+<b>Phone:</b> ${currentUser.phone||"-"}
+</p>
+
+`;
+
+const mine=
+orders.filter(
+o=>o.customerEmail===currentUser.email
+);
+
+if(mine.length){
+
+document.getElementById("userOrders").innerHTML=
+
+mine.map(o=>`
+
+<div class="admin-box">
+
+<b>Order ID:</b> ${o.id}
+
+<br>
+
+<b>Total:</b> ₹${o.total}
+
+<br>
+
+<b>Status:</b> ${o.status}
+
+<br>
+
+<b>Date:</b> ${o.date}
+
+</div>
+
+`).join("");
+
+}else{
+
+document.getElementById("userOrders").innerHTML=
+
+`<div class="empty">
+No orders yet.
+</div>`;
+
+}
+
+}else{
+
+document.getElementById("userDetails").innerHTML=
+
+`<div class="empty">
+Please login first.
+</div>`;
+
+}
+
+</script>
+
+</body>
+
+</html>
